@@ -1,0 +1,375 @@
+{% extends 'base.html' %}
+
+{% block title %}Bijak Finansial - #YangPastiPastiAja{% endblock %}
+
+{% block content %}
+<section class="features">
+    <div class="features-container">
+        <h1 class="section-title">💰 Bijak Finansial</h1>
+        <p style="text-align: center; margin-bottom: 40px; color: #666;">
+            Modul edukasi yang mengajarkan pengenalan tentang simpanan, investasi, dan pinjaman secara mudah dan aplikatif
+        </p>
+
+        <!-- Financial Profile Test -->
+        <div class="form-container">
+            <div class="feature-card" style="text-align: center; background: linear-gradient(135deg, #fff5f3 0%, #ffffff 100%);">
+                <span class="feature-icon">🎯</span>
+                <h3>Tes Profil Keuangan Anda</h3>
+                <p>Kenali tipe finansial Anda dan dapatkan rekomendasi edukasi yang tepat</p>
+                <button class="cta-button" onclick="startFinancialTest()">Mulai Tes Sekarang</button>
+            </div>
+        </div>
+
+        <!-- Learning Modules -->
+        <div style="margin-top: 60px;">
+            <h2 class="section-title">📚 Modul Pembelajaran</h2>
+            
+            <div class="features-grid">
+                {% for modul in modul_list %}
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="thread-category">{{ modul.level }}</span>
+                        <span style="background: #e3f2fd; color: #1976d2; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">
+                            ⏱️ {{ modul.durasi }}
+                        </span>
+                    </div>
+                    <h3>{{ modul.judul }}</h3>
+                    <p>{{ modul.deskripsi }}</p>
+                    <button class="feature-button" onclick="openModule({{ modul.id }})">Mulai Belajar</button>
+                </div>
+                {% endfor %}
+
+                <!-- Additional Modules -->
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="thread-category">Menengah</span>
+                        <span style="background: #e3f2fd; color: #1976d2; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">
+                            ⏱️ 25 menit
+                        </span>
+                    </div>
+                    <h3>Diversifikasi Portofolio</h3>
+                    <p>Pelajari cara membagi risiko investasi dengan diversifikasi yang tepat</p>
+                    <button class="feature-button" onclick="openModule(4)">Mulai Belajar</button>
+                </div>
+
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="thread-category">Pemula</span>
+                        <span style="background: #e3f2fd; color: #1976d2; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">
+                            ⏱️ 12 menit
+                        </span>
+                    </div>
+                    <h3>Emergency Fund 101</h3>
+                    <p>Mengapa dana darurat penting dan cara membangunnya step by step</p>
+                    <button class="feature-button" onclick="openModule(5)">Mulai Belajar</button>
+                </div>
+
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="thread-category">Anak-anak</span>
+                        <span style="background: #e3f2fd; color: #1976d2; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">
+                            ⏱️ 8 menit
+                        </span>
+                    </div>
+                    <h3>Uang dan Keinginan</h3>
+                    <p>Edukasi khusus anak-anak tentang mengelola uang saku dan membedakan kebutuhan vs keinginan</p>
+                    <button class="feature-button" onclick="openModule(6)">Mulai Belajar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Calculator Tools -->
+        <div style="margin-top: 60px;">
+            <h2 class="section-title">🧮 Kalkulator Finansial</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">📊</span>
+                    <h3>Kalkulator Investasi</h3>
+                    <p>Hitung proyeksi investasi berdasarkan modal, return, dan jangka waktu</p>
+                    <button class="feature-button" onclick="openCalculator('investment')">Buka Kalkulator</button>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🏦</span>
+                    <h3>Kalkulator Pinjaman</h3>
+                    <p>Hitung cicilan, bunga, dan total pembayaran pinjaman</p>
+                    <button class="feature-button" onclick="openCalculator('loan')">Buka Kalkulator</button>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">💡</span>
+                    <h3>Budget Planner</h3>
+                    <p>Rencanakan budget bulanan dengan metode 50/30/20</p>
+                    <button class="feature-button" onclick="openCalculator('budget')">Buka Planner</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Tips -->
+        <div style="margin-top: 60px; padding: 40px; background: #f8f9fa; border-radius: 15px;">
+            <h2 style="text-align: center; margin-bottom: 30px;">💡 Tips Finansial Hari Ini</h2>
+            
+            <div class="features-grid">
+                <div style="text-align: center;">
+                    <span style="font-size: 2rem;">🎯</span>
+                    <h4>Aturan 50/30/20</h4>
+                    <p>50% kebutuhan, 30% keinginan, 20% tabungan & investasi</p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <span style="font-size: 2rem;">⚡</span>
+                    <h4>Emergency Fund</h4>
+                    <p>Idealnya 6-12 bulan pengeluaran untuk pegawai, 12-24 bulan untuk freelancer</p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <span style="font-size: 2rem;">📈</span>
+                    <h4>Mulai Investasi</h4>
+                    <p>Compound interest adalah keajaiban kedelapan dunia - Albert Einstein</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracking -->
+        <div style="margin-top: 60px;">
+            <h2 class="section-title">📈 Progress Pembelajaran Anda</h2>
+            
+            <div class="feature-card">
+                <h3>Modul yang Telah Diselesaikan</h3>
+                <div style="margin: 20px 0;">
+                    <div style="background: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden;">
+                        <div style="background: linear-gradient(90deg, #ff6b35, #f7931e); height: 100%; width: 35%; border-radius: 5px;"></div>
+                    </div>
+                    <p style="margin-top: 10px; color: #666;">3 dari 8 modul selesai (35%)</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="padding: 15px; background: #e8f5e8; border-radius: 8px;">
+                        <strong>✅ Dasar-dasar Menabung</strong>
+                        <br><small>Selesai: 15 Juli 2025</small>
+                    </div>
+                    <div style="padding: 15px; background: #e8f5e8; border-radius: 8px;">
+                        <strong>✅ Emergency Fund 101</strong>
+                        <br><small>Selesai: 17 Juli 2025</small>
+                    </div>
+                    <div style="padding: 15px; background: #e8f5e8; border-radius: 8px;">
+                        <strong>✅ Bahaya Pinjaman Online</strong>
+                        <br><small>Selesai: 18 Juli 2025</small>
+                    </div>
+                    <div style="padding: 15px; background: #fff3e0; border-radius: 8px;">
+                        <strong>🔄 Mengenal Investasi</strong>
+                        <br><small>Progress: 60%</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let testQuestion = 1;
+let testAnswers = {};
+
+function startFinancialTest() {
+    document.getElementById('testModal').style.display = 'block';
+    testQuestion = 1;
+    testAnswers = {};
+    showQuestion(1);
+}
+
+function closeTest() {
+    document.getElementById('testModal').style.display = 'none';
+}
+
+function nextQuestion() {
+    // Save current answer
+    const currentAnswer = document.querySelector(`input[name="q${testQuestion}"]:checked`) || 
+                         document.querySelector('input[type="radio"]:checked');
+    
+    if (!currentAnswer) {
+        alert('Pilih jawaban terlebih dahulu!');
+        return;
+    }
+    
+    testAnswers[`q${testQuestion}`] = currentAnswer.value;
+    testQuestion++;
+    
+    if (testQuestion <= 5) {
+        showQuestion(testQuestion);
+    } else {
+        showResult();
+    }
+}
+
+function showQuestion(qNum) {
+    const questions = {
+        1: {
+            text: "Berapa penghasilan bulanan Anda?",
+            options: [
+                { value: "low", text: "< Rp 3 juta" },
+                { value: "medium", text: "Rp 3-8 juta" },
+                { value: "high", text: "> Rp 8 juta" }
+            ]
+        },
+        2: {
+            text: "Berapa persen dari penghasilan yang berhasil Anda sisihkan untuk tabungan?",
+            options: [
+                { value: "low", text: "< 10%" },
+                { value: "medium", text: "10-20%" },
+                { value: "high", text: "> 20%" }
+            ]
+        },
+        3: {
+            text: "Bagaimana sikap Anda terhadap risiko investasi?",
+            options: [
+                { value: "conservative", text: "Sangat hati-hati, tidak mau rugi" },
+                { value: "moderate", text: "Siap risiko kecil untuk keuntungan lebih" },
+                { value: "aggressive", text: "Siap risiko tinggi untuk keuntungan besar" }
+            ]
+        },
+        4: {
+            text: "Apakah Anda sudah memiliki dana darurat?",
+            options: [
+                { value: "none", text: "Belum sama sekali" },
+                { value: "partial", text: "Ada, tapi belum cukup (< 3 bulan)" },
+                { value: "sufficient", text: "Sudah cukup (6+ bulan pengeluaran)" }
+            ]
+        },
+        5: {
+            text: "Apa tujuan finansial utama Anda saat ini?",
+            options: [
+                { value: "emergency", text: "Membangun dana darurat" },
+                { value: "investment", text: "Mulai investasi jangka panjang" },
+                { value: "purchase", text: "Membeli rumah/kendaraan" }
+            ]
+        }
+    };
+    
+    const question = questions[qNum];
+    const content = document.getElementById('testContent');
+    
+    let optionsHtml = '';
+    question.options.forEach(option => {
+        optionsHtml += `
+            <label style="display: block; margin: 10px 0;">
+                <input type="radio" name="q${qNum}" value="${option.value}"> ${option.text}
+            </label>
+        `;
+    });
+    
+    content.innerHTML = `
+        <p><strong>Pertanyaan ${qNum}/5:</strong> ${question.text}</p>
+        <div style="margin: 20px 0;">
+            ${optionsHtml}
+        </div>
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="nextQuestion()" class="cta-button">Lanjut</button>
+            <button onclick="closeTest()" class="feature-button" style="margin-left: 10px;">Tutup</button>
+        </div>
+    `;
+}
+
+function showResult() {
+    const profiles = {
+        'conservative_beginner': {
+            title: 'Konservatif Pemula',
+            description: 'Anda cenderung hati-hati dalam keuangan dan baru memulai perjalanan finansial.',
+            recommendations: [
+                'Fokus membangun dana darurat terlebih dahulu',
+                'Mulai dengan tabungan berjangka atau deposito',
+                'Pelajari dasar-dasar investasi reksadana',
+                'Buat budget dan tracking pengeluaran'
+            ]
+        },
+        'moderate_builder': {
+            title: 'Pembangun Moderat',
+            description: 'Anda sudah memiliki dasar finansial yang baik dan siap untuk langkah berikutnya.',
+            recommendations: [
+                'Diversifikasi investasi ke reksadana campuran',
+                'Pertimbangkan investasi SBN untuk stabilitas',
+                'Tingkatkan persentase tabungan secara bertahap',
+                'Mulai perencanaan asuransi jiwa'
+            ]
+        },
+        'advanced_investor': {
+            title: 'Investor Lanjutan',
+            description: 'Anda memiliki pengetahuan finansial yang baik dan siap untuk investasi yang lebih kompleks.',
+            recommendations: [
+                'Eksplorasi investasi saham individual',
+                'Pertimbangkan properti sebagai investasi',
+                'Optimalisasi tax planning',
+                'Diversifikasi ke instrumen internasional'
+            ]
+        }
+    };
+    
+    // Simple logic to determine profile (bisa diperbaiki dengan algoritma yang lebih kompleks)
+    let profileKey = 'conservative_beginner';
+    if (testAnswers.q1 === 'high' && testAnswers.q4 === 'sufficient') {
+        profileKey = 'advanced_investor';
+    } else if (testAnswers.q2 === 'medium' || testAnswers.q2 === 'high') {
+        profileKey = 'moderate_builder';
+    }
+    
+    const profile = profiles[profileKey];
+    const content = document.getElementById('testContent');
+    
+    content.innerHTML = `
+        <div style="text-align: center;">
+            <h3 style="color: #ff6b35; margin-bottom: 20px;">🎯 Profil Keuangan Anda:</h3>
+            <h2>${profile.title}</h2>
+            <p style="margin: 20px 0; color: #666;">${profile.description}</p>
+            
+            <h4 style="margin: 30px 0 15px 0;">📋 Rekomendasi untuk Anda:</h4>
+            <div style="text-align: left; max-width: 400px; margin: 0 auto;">
+                ${profile.recommendations.map(rec => `<p>• ${rec}</p>`).join('')}
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <button onclick="closeTest()" class="cta-button">Mulai Belajar Sekarang</button>
+            </div>
+        </div>
+    `;
+}
+
+function openModule(moduleId) {
+    alert(`Membuka modul pembelajaran #${moduleId}. Fitur pembelajaran interaktif akan segera tersedia!`);
+}
+
+function openCalculator(type) {
+    const calculators = {
+        'investment': 'Kalkulator Investasi',
+        'loan': 'Kalkulator Pinjaman', 
+        'budget': 'Budget Planner'
+    };
+    
+    alert(`Membuka ${calculators[type]}. Fitur kalkulator interaktif akan segera tersedia!`);
+}
+</script>
+{% endblock %}
+</section>
+
+<!-- Modal for Financial Test -->
+<div id="testModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 40px; border-radius: 15px; max-width: 500px; width: 90%;">
+        <h3 style="text-align: center; margin-bottom: 20px;">🎯 Tes Profil Keuangan</h3>
+        <div id="testContent">
+            <p><strong>Pertanyaan 1/5:</strong> Berapa penghasilan bulanan Anda?</p>
+            <div style="margin: 20px 0;">
+                <label style="display: block; margin: 10px 0;">
+                    <input type="radio" name="income" value="low"> < Rp 3 juta
+                </label>
+                <label style="display: block; margin: 10px 0;">
+                    <input type="radio" name="income" value="medium"> Rp 3-8 juta
+                </label>
+                <label style="display: block; margin: 10px 0;">
+                    <input type="radio" name="income" value="high"> > Rp 8 juta
+                </label>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button onclick="nextQuestion()" class="cta-button">Lanjut</button>
+                <button onclick="closeTest()" class="feature-button" style="margin-left: 10px;">Tutup</button>
+            </div>
+        </div>
+    </div>

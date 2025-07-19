@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-container">
+        <h1><span class="hero-highlight">#YangPastiPastiAja</span><br>Platform Anti Judi Online</h1>
+        <p>Melalui #YangPastiPastiAja, kami bergerak melawan maraknya judi online sekaligus memperkuat daya tahan finansial dan mental masyarakat di tengah arus teknologi yang semakin kencang</p>
+        <a href="#features" class="cta-button">Mulai Sekarang</a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+    <div class="features-container">
+        <h2 class="section-title">Fitur Utama Platform</h2>
+        <div class="features-grid">
+            <!-- Laporkan -->
+            <div class="feature-card">
+                <span class="feature-icon">🚨</span>
+                <h3>Laporkan</h3>
+                <p>Laporkan aktivitas, konten, atau akun yang mempromosikan judi online dengan mudah melalui form sederhana. Sistem tracking status laporan tersedia.</p>
+                <a href="{% url 'main:laporkan' %}" class="feature-button">Buat Laporan</a>
+            </div>
+
+            <!-- Berbagi Cerita -->
+            <div class="feature-card">
+                <span class="feature-icon">🗣️</span>
+                <h3>Berbagi Cerita</h3>
+                <p>Ruang aman bagi korban, penyintas, dan keluarga untuk berbagi pengalaman secara anonim maupun terbuka tentang bahaya judi online.</p>
+                <a href="{% url 'main:berbagi_cerita' %}" class="feature-button">Bagikan Cerita</a>
+            </div>
+
+            <!-- Ruang Diskusi -->
+            <div class="feature-card">
+                <span class="feature-icon">💬</span>
+                <h3>Ruang Diskusi</h3>
+                <p>Forum diskusi interaktif untuk pertukaran cerita dan pembahasan topik bermanfaat seperti investasi, tabungan, dan keuangan personal.</p>
+                <a href="{% url 'main:diskusi' %}" class="feature-button">Join Diskusi</a>
+            </div>
+
+            <!-- Bijak Finansial -->
+            <div class="feature-card">
+                <span class="feature-icon">💰</span>
+                <h3>Bijak Finansial</h3>
+                <p>Modul edukasi tentang simpanan, investasi, dan pinjaman secara mudah dan aplikatif. Termasuk tes profil keuangan dan konsultasi.</p>
+                <a href="{% url 'main:bijak_finansial' %}" class="feature-button">Belajar Finansial</a>
+            </div>
+
+            <!-- Main Sambil Paham -->
+            <div class="feature-card">
+                <span class="feature-icon">🎮</span>
+                <h3>Main Sambil Paham</h3>
+                <p>Pemahaman bahaya judi online dan pentingnya mengelola uang untuk anak-anak melalui komik dan cerpen yang menarik.</p>
+                <a href="{% url 'main:main_sambil_paham' %}" class="feature-button">Lihat Konten</a>
+            </div>
+
+            <!-- Berita Terkini -->
+            <div class="feature-card">
+                <span class="feature-icon">📰</span>
+                <h3>Berita Terkini</h3>
+                <p>Update berita terbaru seputar judi online, regulasi, kasus, edukasi keuangan, dan kampanye anti-judi dari sumber terpercaya.</p>
+                <a href="{% url 'main:berita' %}" class="feature-button">Baca Berita</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="features" style="background: #f8f9fa;">
+    <div class="features-container">
+        <h2 class="section-title">Dampak Platform</h2>
+        <div class="features-grid">
+            <div class="feature-card" style="text-align: center;">
+                <span class="feature-icon" style="color: #ff6b35;">1,250+</span>
+                <h3>Laporan Diterima</h3>
+                <p>Laporan aktivitas judi online yang telah diproses dan ditindaklanjuti</p>
+            </div>
+            <div class="feature-card" style="text-align: center;">
+                <span class="feature-icon" style="color: #ff6b35;">850+</span>
+                <h3>Cerita Dibagikan</h3>
+                <p>Pengalaman dan cerita yang telah dibagikan untuk membantu sesama</p>
+            </div>
+            <div class="feature-card" style="text-align: center;">
+                <span class="feature-icon" style="color: #ff6b35;">3,400+</span>
+                <h3>Pengguna Aktif</h3>
+                <p>Anggota komunitas yang aktif belajar dan berdiskusi</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

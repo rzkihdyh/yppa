@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block title %}Berbagi Cerita - #YangPastiPastiAja{% endblock %}
+
+{% block content %}
+<section class="features">
+    <div class="features-container">
+        <h1 class="section-title">🗣️ Berbagi Cerita</h1>
+        <p style="text-align: center; margin-bottom: 40px; color: #666;">
+            Ruang aman untuk berbagi pengalaman, memberikan dukungan, dan saling menguatkan
+        </p>
+
+        <!-- Form Berbagi Cerita -->
+        <div class="form-container">
+            <div class="feature-card">
+                <h3>✍️ Bagikan Cerita Anda</h3>
+                <form id="ceritaForm" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="jenis_cerita">Jenis Cerita</label>
+                        <select id="jenis_cerita" name="jenis_cerita" required>
+                            <option value="">Pilih jenis cerita</option>
+                            <option value="korban">Pengalaman sebagai korban</option>
+                            <option value="penyintas">Cerita penyintas/pemulihan</option>
+                            <option value="keluarga">Pengalaman keluarga korban</option>
+                            <option value="saksi">Melihat orang terdekat terkena dampak</option>
+                            <option value="edukasi">Tips dan edukasi</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="judul_cerita">Judul Cerita</label>
+                        <input type="text" id="judul_cerita" name="judul_cerita" required 
+                            placeholder="Berikan judul yang menggambarkan cerita Anda">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="isi_cerita">Cerita Anda</label>
+                        <textarea id="isi_cerita" name="isi_cerita" rows="8" required 
+                            placeholder="Bagikan pengalaman, perasaan, atau tips Anda. Cerita Anda dapat membantu dan menginspirasi orang lain."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nama_penulis">Nama (Opsional)</label>
+                        <input type="text" id="nama_penulis" name="nama_penulis" 
+                            placeholder="Nama Anda atau 'Anonim' jika ingin privasi">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="izin_publikasi" name="izin_publikasi" required>
+                            Saya mengizinkan cerita ini dipublikasikan untuk membantu orang lain
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="cta-button" style="width: 100%;">Bagikan Cerita</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Cerita-cerita yang Dibagikan -->
+        <div style="margin-top: 60px;">
+            <h2 class="section-title">💝 Cerita dari Komunitas</h2>
+            
+            <div class="features-grid">
+                <!-- Cerita 1 -->
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="thread-category">Penyintas</span>
+                        <small style="color: #666;">3 hari lalu</small>
+                    </div>
+                    <h3>Bangkit dari Keterpurukan</h3>
+                    <p style="margin-bottom: 15px;">
+                        "Saya pernah kehilangan 50 juta rupiah karena judi online. Rasanya dunia runtuh, keluarga kecewa. 
+                        Tapi dengan dukungan keluarga dan komunitas ini, saya bisa bangkit. Sekarang saya sudah 8 bulan bersih 
+                        dari judi dan mulai membangun tabungan kembali..."
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small><strong>- Rizki (Anonim)</strong></small>
+                        <button class="feature-button" onclick="showFullStory(1)">Baca Selengkapnya</button>
+                    </div>
+                </div>
+
+                <!-- Cerita 2 -->
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="thread-category">Keluarga</span>
+                        <small style="color: #666;">1 minggu lalu</small>
+                    </div>
+                    <h3>Menyelamatkan Suami dari Judi Online</h3>
+                    <p style="margin-bottom: 15px;">
+                        "Suami saya kecanduan judi online selama 2 tahun. Tabungan rumah habis, cicilan nunggak. 
+                        Saya hampir menyerah, tapi akhirnya menemukan cara berkomunikasi yang tepat dan mendapatkan 
+                        bantuan profesional..."
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small><strong>- Sari M.</strong></small>
+                        <button class="feature-button" onclick="showFullStory(2)">Baca Selengkapnya</button>
+                    </div>
+                </div>
+
+                <!-- Cerita 3 -->
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="thread-category">Edukasi</span>
+                        <small style="color: #666;">2 minggu lalu</small>
+                    </div>
+                    <h3>Tips Menghindar dari Jebakan Judi Online</h3>
+                    <p style="margin-bottom: 15px;">
+                        "Sebagai mantan korban, saya ingin berbagi tanda-tanda yang harus diwaspadai: 
+                        1) Iklan yang menjanjikan keuntungan mudah, 2) Bonus besar di awal, 3) Tekanan untuk deposit cepat. 
+                        Selalu ingat: judi online dirancang untuk membuat kita kalah..."
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small><strong>- Ahmad P.</strong></small>
+                        <button class="feature-button" onclick="showFullStory(3)">Baca Selengkapnya</button>
+                    </div>
+                </div>
+
+                <!-- Cerita 4 -->
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="thread-category">Korban</span>
+                        <small style="color: #666;">3 minggu lalu</small>
+                    </div>
+                    <h3>Awal Mula Terjerumus</h3>
+                    <p style="margin-bottom: 15px;">
+                        "Semua dimulai dari iklan di media sosial. Mereka bilang modal 50 ribu bisa jadi jutaan. 
+                        Awalnya saya menang beberapa kali, tapi itu hanya umpan. Dalam 3 bulan, saya kehilangan 
+                        uang kuliah dan harus mengambil pinjaman..."
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small><strong>- Anonim</strong></small>
+                        <button class="feature-button" onclick="showFullStory(4)">Baca Selengkapnya</button>
+                    </div>
+                </div>
+
+                <!-- Cerita 5 -->
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="thread-category">Saksi</span>
+                        <small style="color: #666;">1 bulan lalu</small>
+                    </div>
+                    <h3>Teman Terbaik yang Berubah</h3>
+                    <p style="margin-bottom: 15px;">
+                        "Saya melihat teman terbaik saya berubah drastis karena judi online. Dari yang ceria jadi pemurung, 
+                        sering meminjam uang, bahkan berbohong ke keluarga. Akhirnya saya memutuskan untuk intervention 
+                        dengan bantuan keluarganya..."
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small><strong>- Diana L.</strong></small>
+                        <button class="feature-button" onclick="showFullStory(5)">Baca Selengkapnya</button>
+                    </div>
+                </div>
+
+                <!-- Cerita 6 -->
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="thread-category">Penyintas</span>
+                        <small style="color: #666;">1 bulan lalu</small>
+                    </div>
+                    <h3>Membangun Kembali Hidup Finansial</h3>
+                    <p style="margin-bottom: 15px;">
+                        "Setelah 1 tahun bersih dari judi, saya belajar mengatur keuangan dengan benar. 
+                        Mulai dari budgeting, emergency fund, sampai investasi sederhana. 
+                        Kunci utamanya adalah disiplin dan punya tujuan yang jelas..."
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small><strong>- Budi S.</strong></small>
+                        <button class="feature-button" onclick="showFullStory(6)">Baca Selengkapnya</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Section -->
+        <div style="margin-top: 60px; padding: 40px; background: #fff5f3; border-radius: 15px;">
+            <h3 style="text-align: center; margin-bottom: 20px;">💪 Butuh Dukungan?</h3>
+            <p style="text-align: center; margin-bottom: 30px;">
+                Jika Anda atau orang terdekat membutuhkan bantuan profesional terkait kecanduan judi, 
+                jangan ragu untuk menghubungi layanan konseling yang tersedia.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <button class="feature-button">📞 Hotline Konseling</button>
+                <button class="feature-button">💬 Chat Konselor</button>
+                <button class="feature-button">🏥 Cari Terapis</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function showFullStory(id) {
+    alert('Fitur baca cerita lengkap akan segera tersedia. Terima kasih!');
+}
+</script>
+{% endblock %}

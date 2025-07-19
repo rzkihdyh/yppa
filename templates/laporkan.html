@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% block title %}Laporkan - #YangPastiPastiAja{% endblock %}
+
+{% block content %}
+<section class="features">
+    <div class="form-container">
+        <h1 class="section-title">🚨 Laporkan Aktivitas Judi Online</h1>
+        <p style="text-align: center; margin-bottom: 40px; color: #666;">
+            Bantu kami melawan judi online dengan melaporkan aktivitas, konten, atau akun yang mencurigakan
+        </p>
+
+        <form id="laporanForm" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="jenis_laporan">Jenis Laporan</label>
+                <select id="jenis_laporan" name="jenis_laporan" required>
+                    <option value="">Pilih jenis laporan</option>
+                    <option value="akun">Akun Mencurigakan</option>
+                    <option value="konten">Konten Promosi Judi</option>
+                    <option value="website">Website Judi Online</option>
+                    <option value="aplikasi">Aplikasi Judi</option>
+                    <option value="iklan">Iklan Judi Online</option>
+                    <option value="lainnya">Lainnya</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="platform">Platform/Media</label>
+                <select id="platform" name="platform" required>
+                    <option value="">Pilih platform</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="tiktok">TikTok</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="twitter">Twitter/X</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="whatsapp">WhatsApp</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="website">Website</option>
+                    <option value="lainnya">Lainnya</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="url_akun">URL/Username/Link (Opsional)</label>
+                <input type="text" id="url_akun" name="url_akun" placeholder="https://... atau @username">
+            </div>
+
+            <div class="form-group">
+                <label for="deskripsi">Deskripsi Laporan</label>
+                <textarea id="deskripsi" name="deskripsi" rows="5" required 
+                    placeholder="Jelaskan secara detail aktivitas yang Anda laporkan. Sertakan informasi seperti waktu kejadian, konten yang ditemukan, dll."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Bukti Pendukung (Screenshot/Video)</label>
+                <div class="file-upload" onclick="document.getElementById('bukti').click()">
+                    <input type="file" id="bukti" name="bukti" accept="image/*,video/*" multiple>
+                    <p>📁 Klik untuk upload file atau drag & drop</p>
+                    <small>Format: JPG, PNG, MP4, MOV (Max 10MB per file)</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pelapor_nama">Nama Pelapor (Opsional)</label>
+                <input type="text" id="pelapor_nama" name="pelapor_nama" placeholder="Nama Anda (bisa dikosongkan untuk anonim)">
+            </div>
+
+            <div class="form-group">
+                <label for="pelapor_email">Email (Opsional)</label>
+                <input type="email" id="pelapor_email" name="pelapor_email" placeholder="email@contoh.com (untuk update status laporan)">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="cta-button" style="width: 100%;">Kirim Laporan</button>
+            </div>
+        </form>
+
+        <!-- Status Tracking -->
+        <div style="margin-top: 60px; padding-top: 40px; border-top: 2px solid #f0f0f0;">
+            <h3 style="text-align: center; margin-bottom: 30px;">🔍 Tracking Status Laporan</h3>
+            
+            <div class="form-group">
+                <label for="tracking_id">ID Laporan</label>
+                <input type="text" id="tracking_id" placeholder="Masukkan ID laporan Anda">
+                <button type="button" onclick="checkStatus()" class="feature-button" style="margin-top: 10px;">Cek Status</button>
+            </div>
+
+            <div id="status_result" style="margin-top: 20px; display: none;">
+                <div class="feature-card">
+                    <h4>Status Laporan: <span id="status_text" class="status-badge">-</span></h4>
+                    <p id="status_detail">-</p>
+                    <small id="status_date">-</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample Reports -->
+        <div style="margin-top: 60px;">
+            <h3 style="text-align: center; margin-bottom: 30px;">📊 Contoh Laporan yang Berhasil</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="status-badge status-selesai">Selesai</span>
+                    <h4 style="margin: 10px 0;">Akun Instagram Promosi Slot</h4>
+                    <p>Akun @slotgacor88 yang mempromosikan permainan slot online dengan bonus fantastis. Akun telah dilaporkan ke platform dan diblokir.</p>
+                    <small>Dilaporkan: 15 Juli 2025</small>
+                </div>
+                <div class="feature-card">
+                    <span class="status-badge status-diproses">Diproses</span>
+                    <h4 style="margin: 10px 0;">Website Judi Online</h4>
+                    <p>Website yang menawarkan taruhan bola dan casino online. Sedang dalam proses pelaporan ke Kominfo.</p>
+                    <small>Dilaporkan: 18 Juli 2025</small>
+                </div>
+                <div class="feature-card">
+                    <span class="status-badge status-diterima">Diterima</span>
+                    <h4 style="margin: 10px 0;">Iklan TikTok Poker</h4>
+                    <p>Iklan yang muncul di TikTok mempromosikan aplikasi poker online. Laporan diterima dan menunggu verifikasi.</p>
+                    <small>Dilaporkan: 19 Juli 2025</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function checkStatus() {
+    const trackingId = document.getElementById('tracking_id').value;
+    const statusResult = document.getElementById('status_result');
+    const statusText = document.getElementById('status_text');
+    const statusDetail = document.getElementById('status_detail');
+    const statusDate = document.getElementById('status_date');
+    
+    if (!trackingId) {
+        alert('Masukkan ID laporan terlebih dahulu');
+        return;
+    }
+    
+    // Simulasi pengecekan status
+    const statuses = [
+        {
+            status: 'diterima',
+            text: 'Diterima',
+            detail: 'Laporan Anda telah diterima dan sedang menunggu verifikasi tim kami.',
+            date: 'Diterima pada: 19 Juli 2025, 14:30 WIB'
+        },
+        {
+            status: 'diproses',
+            text: 'Diproses',
+            detail: 'Laporan sedang diproses dan akan ditindaklanjuti ke pihak berwenang.',
+            date: 'Diproses pada: 18 Juli 2025, 09:15 WIB'
+        },
+        {
+            status: 'selesai',
+            text: 'Selesai',
+            detail: 'Laporan telah selesai diproses. Akun/konten yang dilaporkan telah ditindak.',
+            date: 'Selesai pada: 15 Juli 2025, 16:45 WIB'
+        }
+    ];
+    
+    const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+    
+    statusText.textContent = randomStatus.text;
+    statusText.className = `status-badge status-${randomStatus.status}`;
+    statusDetail.textContent = randomStatus.detail;
+    statusDate.textContent = randomStatus.date;
+    
+    statusResult.style.display = 'block';
+}
+</script>
+{% endblock %}

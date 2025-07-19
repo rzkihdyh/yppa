@@ -1,0 +1,268 @@
+{% extends 'base.html' %}
+
+{% block title %}Berita Terkini - #YangPastiPastiAja{% endblock %}
+
+{% block content %}
+<section class="features">
+    <div class="features-container">
+        <h1 class="section-title">📰 Berita Terkini</h1>
+        <p style="text-align: center; margin-bottom: 40px; color: #666;">
+            Update berita terbaru seputar judi online, regulasi, kasus, edukasi keuangan, 
+            dan kampanye anti-judi yang disaring dari sumber terpercaya
+        </p>
+
+        <!-- News Filter -->
+        <div style="text-align: center; margin-bottom: 40px;">
+            <div style="display: inline-flex; gap: 10px; background: #f8f9fa; padding: 10px; border-radius: 25px; flex-wrap: wrap;">
+                <button class="news-filter active" onclick="filterNews('semua')" 
+                    style="padding: 10px 20px; border: none; border-radius: 20px; background: #ff6b35; color: white; cursor: pointer; margin: 5px;">
+                    Semua Berita
+                </button>
+                <button class="news-filter" onclick="filterNews('regulasi')" 
+                    style="padding: 10px 20px; border: none; border-radius: 20px; background: white; color: #333; cursor: pointer; margin: 5px;">
+                    Regulasi
+                </button>
+                <button class="news-filter" onclick="filterNews('ekonomi')" 
+                    style="padding: 10px 20px; border: none; border-radius: 20px; background: white; color: #333; cursor: pointer; margin: 5px;">
+                    Ekonomi
+                </button>
+                <button class="news-filter" onclick="filterNews('edukasi')" 
+                    style="padding: 10px 20px; border: none; border-radius: 20px; background: white; color: #333; cursor: pointer; margin: 5px;">
+                    Edukasi
+                </button>
+                <button class="news-filter" onclick="filterNews('kasus')" 
+                    style="padding: 10px 20px; border: none; border-radius: 20px; background: white; color: #333; cursor: pointer; margin: 5px;">
+                    Kasus
+                </button>
+            </div>
+        </div>
+
+        <!-- Featured News -->
+        <div style="margin-bottom: 60px;">
+            <h2 style="margin-bottom: 30px;">🔥 Berita Utama</h2>
+            <div class="feature-card" style="background: linear-gradient(135deg, #fff5f3 0%, #ffffff 100%); border-left: 5px solid #ff6b35;">
+                <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+                    <div class="news-image" style="width: 150px; height: 100px; flex-shrink: 0;">📰</div>
+                    <div style="flex: 1;">
+                        <span class="thread-category">Breaking News</span>
+                        <h3 style="margin: 10px 0;">Polri Ungkap Sindikat Judi Online Terbesar dengan Omzet Rp 25 Triliun</h3>
+                        <p style="color: #666; margin-bottom: 15px;">
+                            Kepolisian berhasil membongkar jaringan judi online terbesar dengan melibatkan puluhan server 
+                            dan ribuan agen di seluruh Indonesia. Kerugian negara diperkirakan mencapai ratusan triliun rupiah.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <small style="color: #666;">📅 19 Juli 2025 | 📍 Detik.com</small>
+                            <button class="feature-button">Baca Selengkapnya</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- News Grid -->
+        <div class="news-grid">
+            {% for berita in berita_list %}
+            <div class="news-card" data-kategori="{{ berita.kategori|lower }}">
+                <div class="news-image">📰</div>
+                <div class="news-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span class="thread-category">{{ berita.kategori }}</span>
+                        <small class="news-date">{{ berita.tanggal }}</small>
+                    </div>
+                    <h3 class="news-title">{{ berita.judul }}</h3>
+                    <p style="color: #666; margin-bottom: 15px;">{{ berita.ringkasan }}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small style="color: #666;">📍 {{ berita.sumber }}</small>
+                        <button class="feature-button" onclick="readNews({{ berita.id }})">Baca</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Additional News Items -->
+            <div class="news-card" data-kategori="kasus">
+                <div class="news-image">⚖️</div>
+                <div class="news-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span class="thread-category">Kasus</span>
+                        <small class="news-date">16 Juli 2025</small>
+                    </div>
+                    <h3 class="news-title">Mahasiswa Bunuh Diri Karena Terlilit Hutang Judi Online</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Tragedi yang menimpa mahasiswa di Surabaya mengingatkan betapa berbahayanya judi online bagi kesehatan mental...</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small style="color: #666;">📍 Tribun News</small>
+                        <button class="feature-button" onclick="readNews(4)">Baca</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-card" data-kategori="edukasi">
+                <div class="news-image">🎓</div>
+                <div class="news-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span class="thread-category">Edukasi</span>
+                        <small class="news-date">15 Juli 2025</small>
+                    </div>
+                    <h3 class="news-title">5 Cara Mengajarkan Anak Mengelola Uang Sejak Dini</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Financial planner memberikan tips praktis untuk orangtua dalam mengajarkan literasi finansial kepada anak...</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small style="color: #666;">📍 Kontan.co.id</small>
+                        <button class="feature-button" onclick="readNews(5)">Baca</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-card" data-kategori="regulasi">
+                <div class="news-image">📋</div>
+                <div class="news-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span class="thread-category">Regulasi</span>
+                        <small class="news-date">14 Juli 2025</small>
+                    </div>
+                    <h3 class="news-title">DPR Sahkan RUU Tindak Pidana Perjudian Online</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Rancangan Undang-Undang baru memberikan sanksi lebih tegas bagi pelaku dan penyelenggara judi online...</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small style="color: #666;">📍 Tempo.co</small>
+                        <button class="feature-button" onclick="readNews(6)">Baca</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-card" data-kategori="ekonomi">
+                <div class="news-image">💹</div>
+                <div class="news-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span class="thread-category">Ekonomi</span>
+                        <small class="news-date">13 Juli 2025</small>
+                    </div>
+                    <h3 class="news-title">Startup Fintech Indonesia Kembangkan Fitur Anti-Judi</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Beberapa aplikasi finansial lokal mulai mengintegrasikan AI untuk mendeteksi transaksi yang mengarah ke judi online...</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small style="color: #666;">📍 Tech in Asia</small>
+                        <button class="feature-button" onclick="readNews(7)">Baca</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-card" data-kategori="kasus">
+                <div class="news-image">🚨</div>
+                <div class="news-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span class="thread-category">Kasus</span>
+                        <small class="news-date">12 Juli 2025</small>
+                    </div>
+                    <h3 class="news-title">Pegawai Bank Gelapkan Dana Nasabah untuk Judi Online</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Kasus yang terjadi di Jakarta Selatan ini melibatkan dana nasabah hingga miliaran rupiah yang digunakan untuk berjudi...</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small style="color: #666;">📍 Liputan6.com</small>
+                        <button class="feature-button" onclick="readNews(8)">Baca</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-card" data-kategori="edukasi">
+                <div class="news-image">💡</div>
+                <div class="news-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span class="thread-category">Edukasi</span>
+                        <small class="news-date">11 Juli 2025</small>
+                    </div>
+                    <h3 class="news-title">Investasi Reksadana vs Deposito: Mana yang Lebih Menguntungkan?</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Perbandingan lengkap antara reksadana dan deposito sebagai alternatif investasi yang aman dari judi online...</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small style="color: #666;">📍 Bareksa.com</small>
+                        <button class="feature-button" onclick="readNews(9)">Baca</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter Subscription -->
+        <div style="margin-top: 60px; padding: 40px; background: linear-gradient(135deg, #ff6b35, #f7931e); border-radius: 15px; text-align: center; color: white;">
+            <h2 style="margin-bottom: 20px; color: white;">📧 Berlangganan Newsletter</h2>
+            <p style="margin-bottom: 30px; opacity: 0.9;">
+                Dapatkan update berita terbaru dan tips finansial langsung di email Anda
+            </p>
+            <div style="display: flex; gap: 10px; max-width: 400px; margin: 0 auto; flex-wrap: wrap;">
+                <input type="email" placeholder="Masukkan email Anda" 
+                    style="flex: 1; padding: 12px; border: none; border-radius: 8px; min-width: 200px;">
+                <button onclick="subscribeNewsletter()" 
+                    style="background: white; color: #ff6b35; padding: 12px 20px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                    Berlangganan
+                </button>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div style="margin-top: 60px;">
+            <h2 style="text-align: center; margin-bottom: 30px;">📊 Statistik Platform</h2>
+            <div class="features-grid">
+                <div style="text-align: center; padding: 30px; background: #f8f9fa; border-radius: 15px;">
+                    <span style="font-size: 2.5rem; color: #ff6b35; display: block; margin-bottom: 10px;">2,500+</span>
+                    <h4>Berita Dipublikasi</h4>
+                    <p style="color: #666;">Berita terpercaya tentang judi online dan edukasi finansial</p>
+                </div>
+                <div style="text-align: center; padding: 30px; background: #f8f9fa; border-radius: 15px;">
+                    <span style="font-size: 2.5rem; color: #ff6b35; display: block; margin-bottom: 10px;">50+</span>
+                    <h4>Sumber Media</h4>
+                    <p style="color: #666;">Media terpercaya yang menjadi partner dalam edukasi</p>
+                </div>
+                <div style="text-align: center; padding: 30px; background: #f8f9fa; border-radius: 15px;">
+                    <span style="font-size: 2.5rem; color: #ff6b35; display: block; margin-bottom: 10px;">15K+</span>
+                    <h4>Pembaca Aktif</h4>
+                    <p style="color: #666;">Pengguna yang rutin membaca berita dan update terbaru</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function filterNews(kategori) {
+    const newsCards = document.querySelectorAll('.news-card');
+    const filterButtons = document.querySelectorAll('.news-filter');
+    
+    // Update button styles
+    filterButtons.forEach(btn => {
+        btn.style.background = 'white';
+        btn.style.color = '#333';
+    });
+    event.target.style.background = '#ff6b35';
+    event.target.style.color = 'white';
+    
+    // Filter news cards
+    newsCards.forEach(card => {
+        const cardKategori = card.getAttribute('data-kategori');
+        
+        if (kategori === 'semua') {
+            card.style.display = 'block';
+        } else if (cardKategori === kategori) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+function readNews(newsId) {
+    alert(`Membuka berita #${newsId}. Fitur detail berita akan segera tersedia!`);
+}
+
+function subscribeNewsletter() {
+    const email = event.target.previousElementSibling.value;
+    
+    if (!email) {
+        alert('Masukkan email terlebih dahulu!');
+        return;
+    }
+    
+    if (!email.includes('@')) {
+        alert('Masukkan email yang valid!');
+        return;
+    }
+    
+    alert('Terima kasih! Anda telah berlangganan newsletter #YangPastiPastiAja. Konfirmasi akan dikirim ke email Anda.');
+    event.target.previousElementSibling.value = '';
+}
+</script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}#YangPastiPastiAja - Platform Anti Judi Online{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta name="description" content="Platform edukatif untuk anak muda anti judi online">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="{% url 'main:index' %}" class="logo">#YangPastiPastiAja</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="{% url 'main:index' %}">Beranda</a></li>
+                <li><a href="{% url 'main:laporkan' %}">Laporkan</a></li>
+                <li><a href="{% url 'main:berbagi_cerita' %}">Berbagi Cerita</a></li>
+                <li><a href="{% url 'main:diskusi' %}">Diskusi</a></li>
+                <li><a href="{% url 'main:bijak_finansial' %}">Bijak Finansial</a></li>
+                <li><a href="{% url 'main:main_sambil_paham' %}">Main Sambil Paham</a></li>
+                <li><a href="{% url 'main:berita' %}">Berita</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Chat Assistant -->
+    <div class="chat-assistant">
+        <button class="chat-button" id="chatButton">💬</button>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                Asisten Finansial
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div style="padding: 10px; background: #f5f5f5; border-radius: 10px; margin-bottom: 10px;">
+                    Halo! Saya asisten finansial #YangPastiPastiAja. Ada yang bisa saya bantu mengenai keuangan?
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Ketik pesan...">
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 #YangPastiPastiAja. Platform edukatif anti judi online.</p>
+        <p>Melindungi generasi muda dari bahaya judi online</p>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
